@@ -20,6 +20,8 @@ struct image_send_state_t {
 	uint16_t numPackets;
 	File imageFile;
 	uint32_t imageFileSize;
+	bool packetAck;
+	bool packetSent;
 };
 
 /* public globals */

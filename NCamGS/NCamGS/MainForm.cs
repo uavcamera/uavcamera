@@ -92,7 +92,7 @@ namespace NCamGS
             string fileName = string.Format("uavPictureAt{0:yyyy-MM-dd_hh-mm-ss-tt}.jpg", DateTime.Now);
             FileStream fileStream;
 
-                fileStream = new FileStream(filePathTextBox.Text+"\\"+fileName, FileMode.Create);
+                fileStream = new FileStream(filePathTextBox.Text + "\\" + fileName, FileMode.Create);
             BinaryWriter opFile = new BinaryWriter(fileStream);
 
 
@@ -173,13 +173,14 @@ namespace NCamGS
 
                     if (packetNum == lastPacketNum)
                     {
-                        //Console.WriteLine("End of image.");
                         continue;
                     }
+                    uavConn.SendTextToUAV("payload[0].send_bytes 6 " + ((uint)packet[1]).ToString() + " " + ((uint)packet[2]).ToString());
                     statusLabel.Text = "Writing";
                     Console.WriteLine("Writing.");
                     for (int i = 3; i < packetSize; i++)
                     {
+                        
                         opFile.Write(packet[i]);
                         numBytes++;
                     }

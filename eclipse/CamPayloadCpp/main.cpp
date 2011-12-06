@@ -77,7 +77,21 @@ int main()
 				//DLOG("Sending packet ");
 				//DLOG(imageSendState.currentPacket);
 				//DLOG("\n\r");
-				send_IMAGE_DATA_packet();
+				if(imageSendState.packetSent == false) {
+					//DLOG("Sending packet.");
+					send_IMAGE_DATA_packet();
+					imageSendState.packetSent = true;
+					imageSendState.packetAck = false;
+					ackTimer = 0;
+				} else if (imageSendState.packetAck == false) {
+					if(ackTimer > 2) {
+						imageSendState.packetSent = false;
+					}
+				} else {
+					imageSendState.packetAck = false;
+					imageSendState.packetSent = false;
+					imageSendState.currentPacket++;
+				}
 			} else {
 				imageSendState.sendingImage = false;
 				sdFile.close();

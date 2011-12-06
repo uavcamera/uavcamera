@@ -28,9 +28,9 @@ void packet_scan(uint8_t *data, uint8_t length)
 {
 	if (length > 0)
 	{
-		DLOG("Got message, length: ");
-		DLOG((int)length);
-		DLOG("\n\r");
+		//DLOG("Got message, length: ");
+		//DLOG((int)length);
+		//DLOG("\n\r");
 		switch (data[0])
 		{
 			case MID_TAKE_PICTURE:
@@ -127,6 +127,13 @@ void packet_scan(uint8_t *data, uint8_t length)
 				}
 				break;
 
+			case MID_IMAGE_DATA_ACK:
+				if(((uint16_t)data[1] + (uint16_t)(data[2] << 8)) == imageSendState.currentPacket) {
+					// ack for current packet
+					imageSendState.packetAck = true;
+				}
+				break;
+
 			default: // not a valid message
 				DLOG("Invalid message, length: ");
 				DLOG(length);
@@ -175,6 +182,8 @@ void packet_tx_request()
 		//send_set_class_indexed_item_indexed(CLASS_PAYLOAD, module_id, CLASS_PAYLOAD_MEM_BYTES, 2, data, 4);
 		messageStartSendPending = false;
 	}
+
+	ackTimer++;
 
 }
 

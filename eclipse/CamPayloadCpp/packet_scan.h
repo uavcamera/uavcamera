@@ -34,6 +34,8 @@
 	// - GS > PL: Configure Camera [ Configure Camera Message ID ] [ Colour Type ] [ Raw image resolution ] [ Jpeg Image Resolution ]
 	#define MID_CONFIGURE_CAMERA		5
 
+	// - GS > PL: [ MID_IMAGE_DATA_ACK ] [ Packet Number ]
+	#define MID_IMAGE_DATA_ACK			6
 
 	/*//	- GS > PL: Set Colour Type [ Set Colour Type Message ID ] [ Colour Type ]
 	//	- GS > PL: Set Image Resolution [ Set Image Resolution Message ID ] [ Image Resolution ]

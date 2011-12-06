@@ -10,6 +10,8 @@ void init_image_sender() {
 	imageSendState.imageFileSize = 0;
 	imageSendState.numPackets = 0;
 	imageSendState.sendingImage = false;
+	imageSendState.packetSent = false;
+	imageSendState.packetAck = false;
 	imageSendState.imageFileSize = 0;
 }
 
@@ -82,6 +84,6 @@ void send_IMAGE_DATA_packet() {
 
 
 	flag_want_to_send_message();
-	imageSendState.currentPacket++;
+
 
 }
