@@ -50,7 +50,7 @@ namespace NCamGS
 
                 consolePort.Connect("localhost", 8800);
                 Console.WriteLine("Data port connection to Port Name {0} Port Number {1} is complete!", "localhost", 8800);
-                this.SendTextToUAV("da 20 payload[0].mem_bytes[0]");
+                this.SendTextToUAV("da 40 payload[0].mem_bytes[0]");
             }
             catch
             {
@@ -142,7 +142,7 @@ namespace NCamGS
             }
             else
             {
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < 10; i++)
                 {
                     try
                     {
@@ -150,7 +150,13 @@ namespace NCamGS
                         if (random.Next(100) != 1)
                         {
 #endif
-                            int sendByte = consolePort.Send(toUAVByte, toUAVChar.Length, SocketFlags.None);
+                        while (dataPort.Available != 0)
+                        {
+                            byte[] byIn = new byte[1];
+                            
+                            dataPort.Receive(byIn, 1, SocketFlags.None);
+                        }
+                        int sendByte = consolePort.Send(toUAVByte, toUAVChar.Length, SocketFlags.None);
 #if SIMULATE
                         }
                         else
@@ -163,7 +169,7 @@ namespace NCamGS
                     {
                         Console.WriteLine("ERROR: " + ex.Message);
                     }
-                    for (int ii = 0; ii < 600; ii++)
+                    for (int ii = 0; ii < 50; ii++)
                     {
                        byte[] packet = this.GetDataBytes();
                         int packetSize = packet.Length;
