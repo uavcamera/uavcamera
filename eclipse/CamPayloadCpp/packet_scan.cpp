@@ -50,6 +50,7 @@ volatile bool nakReceived = false;
 volatile uint8_t nakCommandID = 120;
 
 volatile uint16_t numTokens;
+volatile uint16_t numTokensMessageSender;
 
 volatile bool onlyGetAcks = false;
 
@@ -227,16 +228,18 @@ void packet_tx_request()
 	//testInt++;
 
 	numTokens++;
+	numTokensMessageSender++;
 
 	STATUS_LED_PORT ^= STATUS_LED;
 	/*if(messageStartSendPending)
 		PORTC |= STATUS_LED;
 	else
 		PORTC &= ~STATUS_LED;*/
-	if(messageStartSendPending) {
+	if(messageStartSendPending && (numTokensMessageSender > 4)) {
 		send_set_class_indexed_item_indexed(CLASS_PAYLOAD, module_id, CLASS_PAYLOAD_MEM_BYTES, 0, messageToSend, messageToSendLength);
 		//send_set_class_indexed_item_indexed(CLASS_PAYLOAD, module_id, CLASS_PAYLOAD_MEM_BYTES, 2, data, 4);
 		messageStartSendPending = false;
+		numTokensMessageSender = 0;
 	}
 
 }
@@ -353,4 +356,5 @@ void wait_for_send_message() {
 
 void flag_want_to_send_message() {
 	messageStartSendPending = true; // flag that we want to send a message
+	numTokensMessageSender = 0;
 }

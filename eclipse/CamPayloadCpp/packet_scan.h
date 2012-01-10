@@ -71,7 +71,7 @@
 
 // number of tokens to wait for each ACK
 #define ACK_WAIT_TOKENS	25
-#define NUM_ACKFAIL_RETRIES 3
+#define NUM_ACKFAIL_RETRIES 30
 // Public globals
 
 extern uint8_t messageToSend[];
@@ -89,6 +89,7 @@ volatile extern bool nakReceived;
 volatile extern uint8_t nakCommandID;
 
 volatile extern uint16_t numTokens;
+volatile extern uint16_t numTokensMessageSender;
 
 volatile extern bool onlyGetAcks;
 
