@@ -26,6 +26,7 @@ using System.Text;
 using System.Net.Sockets;
 using System.Net.Configuration;
 using System.IO;
+using System.Threading;
 
 namespace NCamGS
 {
@@ -66,7 +67,7 @@ namespace NCamGS
             //    getByteSendBytes[i] = 0;
             //}
             //dataPort.Send(getByteSendBytes);
-            byte[] sizeByte = { 0 };
+            /*byte[] sizeByte = { 0 };
             try
             {
                 dataPort.Receive(sizeByte, 1, SocketFlags.None);
@@ -85,7 +86,47 @@ namespace NCamGS
             { 
                 
             }
-            return recBytes;
+            return recBytes;*/
+            for (int i = 0; i < 10; i++)
+            {
+
+                this.SendTextToUAV("payload[0].mem_bytes[0]");
+
+                byte[] cByteIn = new byte[1];
+                for (int pau = 0; pau < 50; pau++)
+                {
+                    while (consolePort.Available != 0) // length of PAYLOAD[0].SEND_BYTES\n
+                    {
+                        string lineOut = this.ReadConsoleLine();
+                        //Console.Write(lineOut);
+                        if (lineOut.IndexOf("PAYLOAD[0].MEM_BYTES[0]") != -1)
+                        {
+                            Console.WriteLine("MEM_BYTES found.");
+                            string[] parts = lineOut.Split(' ');
+                            int pLen = parts.Length;
+                            Console.WriteLine(lineOut);
+                            byte[] bytesOut = new byte[parts.Length - 1];
+
+                            for (int partIndex = 1; partIndex < parts.Length; partIndex++)
+                            {
+                                //Console.Write(parts[partIndex]);
+                                string hex = parts[partIndex].Remove(0, 2);
+                                bytesOut[partIndex - 1] = byte.Parse(hex, System.Globalization.NumberStyles.HexNumber, System.Globalization.CultureInfo.InvariantCulture);
+                                Console.WriteLine((int)bytesOut[partIndex - 1]);   
+                            }
+
+                            return bytesOut;
+                        }
+
+                    }
+                    //Console.WriteLine("Sleeping... {0}", pau);
+                    Thread.Sleep(20);
+                }
+
+                Console.WriteLine("MEM_BYTES request failed, resending request.");
+            }
+            Console.WriteLine("MEM_BYTES request failed completley.");
+            return null;
         }
 
         public void SendTextToUAV(string textToUAV)
@@ -150,14 +191,24 @@ namespace NCamGS
                         if (random.Next(100) != 1)
                         {
 #endif
+                        Thread.Sleep(20);
+                        byte[] byIn = new byte[1];
+                         
                         while (dataPort.Available != 0)
                         {
-                            byte[] byIn = new byte[1];
                             
                             dataPort.Receive(byIn, 1, SocketFlags.None);
                         }
+
+                        while (consolePort.Available != 0)
+                        {
+                            consolePort.Receive(byIn, 1, SocketFlags.None);
+                        }
+
                         int sendByte = consolePort.Send(toUAVByte, toUAVChar.Length, SocketFlags.None);
 #if SIMULATE
+
+
                         }
                         else
                         {
@@ -169,7 +220,7 @@ namespace NCamGS
                     {
                         Console.WriteLine("ERROR: " + ex.Message);
                     }
-                    for (int ii = 0; ii < 50; ii++)
+                    /*for (int ii = 0; ii < 50; ii++)
                     {
                        byte[] packet = this.GetDataBytes();
                         int packetSize = packet.Length;
@@ -181,7 +232,25 @@ namespace NCamGS
                                 return;
                             }
                         } 
+                    }*/
+                    byte[] cByteIn = new byte[1];
+                    for (int pau = 0; pau < 50; pau++)
+                    {
+                        while (consolePort.Available != 0) // length of PAYLOAD[0].SEND_BYTES\n
+                        {
+                            string lineOut = this.ReadConsoleLine();
+                            //Console.Write(lineOut);
+                            if (lineOut.IndexOf("PAYLOAD[0].SEND_BYTES") != -1)
+                            {
+                                Console.WriteLine("Command aknowleged!");
+                                return;
+                            }
+                            
+                        }
+                        //Console.WriteLine("Sleeping... {0}", pau);
+                        Thread.Sleep(20);
                     }
+                    
 
                     Console.WriteLine("No acknowledgement, sadface " + i);   
                 }
@@ -191,6 +260,23 @@ namespace NCamGS
 
             //Port.Receive(fromUAVByte);
             //fromUAV = System.Text.Encoding.ASCII.GetString(fromUAVByte);
+        }
+
+
+        public string ReadConsoleLine()
+        {
+            StringBuilder sBuilder = new StringBuilder();
+            byte[] cByteIn = new byte[1];
+            while ((char)cByteIn[0] != '\n')
+            {
+                consolePort.Receive(cByteIn, 1, SocketFlags.None);
+                sBuilder.Append((char)cByteIn[0]);
+            }
+            string strOut = sBuilder.ToString();
+            // remove trailing carrage returns etc
+            char[] trimChars = {'\n', '\r'};
+            strOut = strOut.TrimEnd(trimChars);
+            return strOut;
         }
 
         public void Close()
