@@ -99,11 +99,8 @@ namespace NCamGS
             statusLabel.Text = "Starting";
             progressBar.Value = 1;
             string fileName = string.Format("uavPictureAt{0:yyyy-MM-dd_hh-mm-ss-tt}.jpg", DateTime.Now);
-            FileStream fileStream;
 
-            fileStream = new FileStream(filePathTextBox.Text+"\\"+fileName, FileMode.Create);
-            BinaryWriter opFile = new BinaryWriter(fileStream);
-
+            string filePath = filePathTextBox.Text + "\\" + fileName;
 
 
 
@@ -141,12 +138,16 @@ namespace NCamGS
             uavConn.SendCommand(imageDownloadRequest,false);
 
             
-           imageListen(fileName, fileStream, opFile);
+           imageListen(fileName, filePath);
 
         }
 
-        private void imageListen(string fileName, FileStream fileStream, BinaryWriter opFile)
+        private void imageListen(string fileName, string filePath)
         {
+            FileStream fileStream;
+            fileStream = new FileStream(filePath, FileMode.Create);
+            BinaryWriter opFile = new BinaryWriter(fileStream);
+
             int num_to_ack_check = 5;
             bool info_ack_flag = false;
 
@@ -278,6 +279,8 @@ namespace NCamGS
                         image[packetNum][i-3] = packet[i];
                         numBytes++;
                     }
+
+
                     
                     progressBar.PerformStep();
                     if (packetNum == (totalPackets - 1))
