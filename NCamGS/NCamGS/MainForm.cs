@@ -1,4 +1,4 @@
-/* Copyright 2011 Michael Hodgson, Piyabhum Sornpaisarn, Andrew Busse, John Charlesworth, Paramithi Svastisinha
+﻿/* Copyright 2011 Michael Hodgson, Piyabhum Sornpaisarn, Andrew Busse, John Charlesworth, Paramithi Svastisinha
 
     This file is part of uavcamera.
 
@@ -712,16 +712,24 @@ namespace NCamGS
             switch (ResolutionComboBox.SelectedIndex)
             {
                 case 0:
-                    uavConn.SendTextToUAV("payload[0].send_bytes 5 0x07 0x07 0x01");
+                    byte[] resolution_select_command1 = { 5, 7, 7, 1 };
+                    uavConn.SendCommand(resolution_select_command1, false);
+                    //uavConn.SendTextToUAV("payload[0].send_bytes 5 0x07 0x07 0x01");
                     break;
                 case 1:
-                    uavConn.SendTextToUAV("payload[0].send_bytes 5 0x07 0x07 0x03");
+                    byte[] resolution_select_command2 = { 5, 7, 7, 3 };
+                    uavConn.SendCommand(resolution_select_command2, false);
+                    //uavConn.SendTextToUAV("payload[0].send_bytes 5 0x07 0x07 0x03");
                     break;
                 case 2:
-                    uavConn.SendTextToUAV("payload[0].send_bytes 5 0x07 0x07 0x05");
+                    byte[] resolution_select_command3 = { 5, 7, 7, 5 };
+                    uavConn.SendCommand(resolution_select_command3, false);
+                    //uavConn.SendTextToUAV("payload[0].send_bytes 5 0x07 0x07 0x05");
                     break;
                 case 3:
-                    uavConn.SendTextToUAV("payload[0].send_bytes 5 0x07 0x07 0x07");
+                    byte[] resolution_select_command4 = { 5, 7, 7, 7 };
+                    uavConn.SendCommand(resolution_select_command4, false);
+                    //uavConn.SendTextToUAV("payload[0].send_bytes 5 0x07 0x07 0x07");
                     break;
                 default:
                     break;
