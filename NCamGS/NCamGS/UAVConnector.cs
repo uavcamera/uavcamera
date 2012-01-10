@@ -36,6 +36,9 @@ namespace NCamGS
         Socket consolePort = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         Random random = new Random();
 
+        int clearCount = 0;
+        int clearNum = 20;
+
         public void Connect(byte dataStream)
         {
             try
@@ -87,6 +90,13 @@ namespace NCamGS
                 
             }
             return recBytes;*/
+
+            clearCount++;
+            if (clearCount >= clearNum)
+            {
+                this.SendTextToUAV("console clear"); // speeds everyting up by keeping the console nice and clear
+                clearCount = 0;
+            }
             for (int i = 0; i < 10; i++)
             {
 
@@ -111,6 +121,10 @@ namespace NCamGS
                             {
                                 //Console.Write(parts[partIndex]);
                                 string hex = parts[partIndex].Remove(0, 2);
+                                if (hex == "")
+                                {
+                                    return bytesOut;
+                                }
                                 bytesOut[partIndex - 1] = byte.Parse(hex, System.Globalization.NumberStyles.HexNumber, System.Globalization.CultureInfo.InvariantCulture);
                                 //Console.WriteLine((int)bytesOut[partIndex - 1]);   
                             }
@@ -149,6 +163,13 @@ namespace NCamGS
         }
         public void SendCommand(byte[] command, bool ack)
         {
+
+            clearCount++;
+            if (clearCount >= clearNum)
+            {
+                this.SendTextToUAV("console clear"); // speeds everyting up by keeping the console nice and clear
+                clearCount = 0;
+            }
 
             // use to send commmand to the uav
             string toUAV;
@@ -191,7 +212,7 @@ namespace NCamGS
                         if (random.Next(100) != 1)
                         {
 #endif
-                        Thread.Sleep(20);
+                        //Thread.Sleep(20);
                         byte[] byIn = new byte[1];
                          
                         while (dataPort.Available != 0)
