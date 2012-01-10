@@ -92,7 +92,7 @@ int main()
 		/* now the messages have been taken care of we need to process any flags the messages may have set
 		 */
 
-
+/*
 		if(imageSendState.sendingImage == true && imageSendState.waitingForAck == true) {
 			if(ackReceived && ackCommandID == MID_IMAGE_DATA) {
 				imageSendState.waitingForAck = false;
@@ -151,7 +151,7 @@ int main()
 				sdFile.close();
 				DLOG("Finished sending image.\n\r");
 			}
-		}
+		}*/
 	}
 	return 0;
 }

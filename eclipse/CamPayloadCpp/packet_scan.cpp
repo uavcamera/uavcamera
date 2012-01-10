@@ -189,6 +189,23 @@ void packet_scan(uint8_t *data, uint8_t length)
 				nakCommandID = data[1];
 				break;
 
+			case MID_REQUEST_IMAGE_PACKET:
+				if(imageSendState.sendingImage == true) {
+					// get the next packet and send it!
+					if(imageSendState.currentPacket < imageSendState.numPackets) {
+						send_IMAGE_DATA_packet();
+						if(imageSendState.currentPacket >= imageSendState.numPackets) {
+							sdFile.close();
+							imageSendState.sendingImage = false;
+						}
+					} else {
+						DLOG("ERROR: No more image packets left!\n\r");
+					}
+				} else {
+					DLOG("ERROR: imageSendState.sendingImage is false\n\r");
+				}
+				break;
+
 			default: // not a valid message
 				DLOG("Invalid message, length: ");
 				DLOG(length);
@@ -235,7 +252,7 @@ void packet_tx_request()
 		PORTC |= STATUS_LED;
 	else
 		PORTC &= ~STATUS_LED;*/
-	if(messageStartSendPending && (numTokensMessageSender > 4)) {
+	if(messageStartSendPending) {// && (numTokensMessageSender > 4)) {
 		send_set_class_indexed_item_indexed(CLASS_PAYLOAD, module_id, CLASS_PAYLOAD_MEM_BYTES, 0, messageToSend, messageToSendLength);
 		//send_set_class_indexed_item_indexed(CLASS_PAYLOAD, module_id, CLASS_PAYLOAD_MEM_BYTES, 2, data, 4);
 		messageStartSendPending = false;
@@ -286,17 +303,17 @@ bool send_IMAGE_DOWNLOAD_INFO_message(uint16_t numPackets) {
 }
 
 void send_ACK_message(uint8_t commandIDToAck) {
-	wait_for_send_message();
+	/*wait_for_send_message();
 	messageToSend[0] = 3;
 	messageToSend[1] = MID_ACK;
 	messageToSend[2] = commandIDToAck;
 	messageToSendLength = 3;
 	send_message(false, 1);
-	//	send_message();
+	//	send_message();*/
 }
 
 bool send_message(bool needsAck, uint8_t numRetries) {
-	if(needsAck) {
+	/*if(needsAck) {
 		for (int i = 0; i < numRetries; i++) {
 			ackReceived = false;
 			nakReceived = false;
@@ -313,14 +330,14 @@ bool send_message(bool needsAck, uint8_t numRetries) {
 		}
 		DLOG("Sending message failed, no ACKs found \n\r");
 		return false;
-	} else {
+	} else {*/
 		flag_want_to_send_message();
-		return true;
-	}
+	/*	return true;
+	}*/
 }
 
 bool wait_for_ACK(uint8_t commandID) {
-	numTokens = 0; // reset the number of tokens passed to 0
+	/*numTokens = 0; // reset the number of tokens passed to 0
 	while(numTokens < ACK_WAIT_TOKENS) {
 		if (ackReceived == true && ackCommandID == commandID) {
 			//DLOG("ACK found and correct.\n\r");
@@ -332,7 +349,7 @@ bool wait_for_ACK(uint8_t commandID) {
 		comms_update();
 		onlyGetAcks = false;
 	}
-	return false;
+	return false;*/
 }
 
 void wait_for_send_message() {
