@@ -105,7 +105,7 @@ namespace NCamGS
             BinaryWriter opFile = new BinaryWriter(fileStream);
 
 
-            uavConn.SendTextToUAV("da 20 payload[0].mem_bytes[0]");
+
 
             stopCommand = false;
             if (capture)
@@ -743,6 +743,7 @@ namespace NCamGS
 
         private void button1_Click(object sender, EventArgs e)
         {
+            stopCommand = false;
             takeNewPicture = true;
             doCommand(false);
         }

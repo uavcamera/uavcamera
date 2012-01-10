@@ -1,4 +1,4 @@
-/* Copyright 2011 Michael Hodgson, Piyabhum Sornpaisarn, Andrew Busse, John Charlesworth, Paramithi Svastisinha
+﻿/* Copyright 2011 Michael Hodgson, Piyabhum Sornpaisarn, Andrew Busse, John Charlesworth, Paramithi Svastisinha
 
     This file is part of uavcamera.
 
@@ -95,7 +95,7 @@
             this.ResolutionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ResolutionComboBox.FormattingEnabled = true;
             this.ResolutionComboBox.Items.AddRange(new object[] {
-            "  80 x 64 ",
+            "80 x 64 ",
             "160 x 128 ",
             "320 x 240",
             "640 x 480"});

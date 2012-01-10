@@ -50,6 +50,7 @@ namespace NCamGS
 
                 consolePort.Connect("localhost", 8800);
                 Console.WriteLine("Data port connection to Port Name {0} Port Number {1} is complete!", "localhost", 8800);
+                this.SendTextToUAV("da 20 payload[0].mem_bytes[0]");
             }
             catch
             {
