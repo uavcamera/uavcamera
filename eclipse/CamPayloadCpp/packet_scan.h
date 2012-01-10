@@ -51,7 +51,7 @@
 #define MAX_MESSAGE_LENGTH 69
 
 // number of tokens to wait for each ACK
-#define ACK_WAIT_TOKENS	4
+#define ACK_WAIT_TOKENS	25
 #define NUM_ACKFAIL_RETRIES 3
 // Public globals
 

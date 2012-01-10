@@ -77,6 +77,7 @@ int main()
 		if(imageSendState.sendingImage == true && imageSendState.waitingForAck == true) {
 			if(ackReceived && ackCommandID == MID_IMAGE_DATA) {
 				imageSendState.waitingForAck = false;
+				imageSendState.numRetries = 0;
 				ackReceived = false;
 				//DLOG("Got IMAGE_DATA ACK.\n\r");
 			}
@@ -86,7 +87,7 @@ int main()
 
 			//if(numTokens > ACK_WAIT_TOKENS || nakReceived == true) {
 				if(wait_for_ACK(MID_IMAGE_DATA) == false) {
-					if(imageSendState.numRetries > 40) {
+					if(imageSendState.numRetries > NUM_ACKFAIL_RETRIES) {
 						imageSendState.sendingImage = false;
 						sdFile.close();
 						DLOG("Aborting image send.\n\r");
