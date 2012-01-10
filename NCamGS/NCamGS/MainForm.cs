@@ -155,12 +155,15 @@ namespace NCamGS
             
             byte[][] image = new byte[1][];
 
-            uint lastPacketNum = 500;
+            int lastPacketNum = -1;
 
             uint totalPackets = 500;
 
             bool startImage = false;
             long numBytes = 0;
+
+            bool firstPacketRequed = false;
+
             while (stopCommand == false)
             {
                 Application.DoEvents();
@@ -195,9 +198,14 @@ namespace NCamGS
 			        }
                     image = new byte[progressBar.Maximum][];
 
-                    // request the next packet
-                    byte[] request_image_packet_command = { 10 };
-                    uavConn.SendCommand(request_image_packet_command, false);
+                    if (firstPacketRequed == false)
+                    {
+                        // request the first packet
+                        byte[] request_image_packet_command = { 10 };
+                        uavConn.SendCommand(request_image_packet_command, false);
+                        firstPacketRequed = true;
+                    }
+                    
 #if SIMULATE
                     }
 #endif
@@ -210,7 +218,7 @@ namespace NCamGS
 #endif
                     statusLabel.Text = "Found IMAGE_DATA";
                     Console.WriteLine("Found IMAGE_DATA");
-                    uint packetNum = (uint)packet[1] + (uint)(packet[2] << 8);
+                    int packetNum = (int)((uint)packet[1] + (uint)(packet[2] << 8));
 
 
                     received_check[packetNum] = true;
@@ -236,6 +244,10 @@ namespace NCamGS
                         continue;
                     }
 
+                    if (packetNum != (lastPacketNum + 1))
+                    {
+                        continue;
+                    }
 
                     /*if ((((packetNum + 1) % num_to_ack_check) == 0) || packetNum == (totalPackets - 1))
                     {
