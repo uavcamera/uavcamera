@@ -68,18 +68,18 @@ void packet_scan(uint8_t *data, uint8_t length)
 					if(length == 1) {
 						send_ACK_message(MID_TAKE_PICTURE);
 						DLOG("TAKE_PICTURE message received\n\r");
-						if(imageSendState.sendingImage == false) {
-							int takePictureImageID;
-							takePictureImageID = take_picture();
-							if(takePictureImageID >= 0) {
-								ILOG("Picture taken with image ID: ");
-								ILOG(takePictureImageID);
-								ILOG("\n\r");
-								send_PICTURE_TAKEN_message(takePictureImageID);
-								DLOG("Sent picture taken message.\n\r");
-							} else {
-								ILOG("Picture taking failed!\n\r");
-							}
+						if(imageSendState.sendingImage == true) {
+							imageSendState.imageFile.close();
+							imageSendState.sendingImage = false;
+						}
+						int takePictureImageID;
+						takePictureImageID = take_picture();
+						if(takePictureImageID >= 0) {
+							ILOG("Picture taken with image ID: ");
+							ILOG(takePictureImageID);
+							ILOG("\n\r");
+							send_PICTURE_TAKEN_message(takePictureImageID);
+							DLOG("Sent picture taken message.\n\r");
 						}
 					} else {
 						DLOG("Invalid TAKE_PICTURE message received\n\r");
@@ -90,6 +90,10 @@ void packet_scan(uint8_t *data, uint8_t length)
 			case MID_IMAGE_DOWNLOAD_REQUEST:
 				if(onlyGetAcks == false) {
 					if(length == 3) {
+						if(imageSendState.sendingImage == true) {
+							imageSendState.imageFile.close();
+							imageSendState.sendingImage = false;
+						}
 						send_ACK_message(MID_IMAGE_DOWNLOAD_REQUEST);
 						uint16_t downloadRequestImageID;
 						downloadRequestImageID = (uint16_t)data[1] + (uint16_t)(data[2] << 8);
@@ -173,7 +177,7 @@ void packet_scan(uint8_t *data, uint8_t length)
 				send_ACK_message(MID_CANCEL_DOWNLOAD);
 				DLOG("CANCEL_DOWNLOAD message received\n\r");
 				imageSendState.sendingImage = false;
-				sdFile.close();
+				imageSendState.imageFile.close();
 				break;
 
 			case MID_ACK:
