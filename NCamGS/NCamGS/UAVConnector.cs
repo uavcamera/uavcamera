@@ -51,7 +51,7 @@ namespace NCamGS
 
                 consolePort.Connect("localhost", 8800);
                 Console.WriteLine("Data port connection to Port Name {0} Port Number {1} is complete!", "localhost", 8800);
-                this.SendTextToUAV("da 40 payload[0].mem_bytes[0]");
+                //this.SendTextToUAV("da 40 payload[0].mem_bytes[0]");
             }
             catch
             {
@@ -101,7 +101,7 @@ namespace NCamGS
                         //Console.Write(lineOut);
                         if (lineOut.IndexOf("PAYLOAD[0].MEM_BYTES[0]") != -1)
                         {
-                            Console.WriteLine("MEM_BYTES found.");
+                            //Console.WriteLine("MEM_BYTES found.");
                             string[] parts = lineOut.Split(' ');
                             int pLen = parts.Length;
                             Console.WriteLine(lineOut);
@@ -112,7 +112,7 @@ namespace NCamGS
                                 //Console.Write(parts[partIndex]);
                                 string hex = parts[partIndex].Remove(0, 2);
                                 bytesOut[partIndex - 1] = byte.Parse(hex, System.Globalization.NumberStyles.HexNumber, System.Globalization.CultureInfo.InvariantCulture);
-                                Console.WriteLine((int)bytesOut[partIndex - 1]);   
+                                //Console.WriteLine((int)bytesOut[partIndex - 1]);   
                             }
 
                             return bytesOut;

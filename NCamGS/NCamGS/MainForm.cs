@@ -126,8 +126,8 @@ namespace NCamGS
                     if (packet[0] == 1 && packetSize == 3)
                     {
                         // got PICTURE_TAKEN
-                        byte[] picture_taken_ack = { 8, 1 }; // ack the picture_taken command
-                        uavConn.SendCommand(picture_taken_ack, true);
+                        //byte[] picture_taken_ack = { 8, 1 }; // ack the picture_taken command
+                        //uavConn.SendCommand(picture_taken_ack, true);
 
                         statusLabel.Text = "Found PICTURE_TAKEN";
                         Console.WriteLine("Found PICTURE_TAKEN");
@@ -179,8 +179,8 @@ namespace NCamGS
 
                     if (!info_ack_flag)
                     {
-                        byte[] image_download_info_ack = { 8, 3 }; // ack the image_download_info command
-                        uavConn.SendCommand(image_download_info_ack,true);
+                        //byte[] image_download_info_ack = { 8, 3 }; // ack the image_download_info command
+                        //uavConn.SendCommand(image_download_info_ack,true);
                         info_ack_flag = true;
                     }
                     statusLabel.Text = "Found IMAGE_DOWNLOAD_INFO";
@@ -193,6 +193,10 @@ namespace NCamGS
                         received_check[rc] = false;
 			        }
                     image = new byte[progressBar.Maximum][];
+
+                    // request the next packet
+                    byte[] request_image_packet_command = { 10 };
+                    uavConn.SendCommand(request_image_packet_command, false);
 #if SIMULATE
                     }
 #endif
@@ -232,7 +236,7 @@ namespace NCamGS
                     }
 
 
-                    if ((((packetNum + 1) % num_to_ack_check) == 0) || packetNum == (totalPackets - 1))
+                    /*if ((((packetNum + 1) % num_to_ack_check) == 0) || packetNum == (totalPackets - 1))
                     {
                         int check_num = num_to_ack_check;
                         if (received_check.Length < num_to_ack_check)
@@ -262,7 +266,7 @@ namespace NCamGS
                             //MessageBox.Show("NAK");
                             continue;
                         }
-                    }
+                    }*/
 
                     statusLabel.Text = "Writing";
                     Console.WriteLine("Writing.");
@@ -279,6 +283,10 @@ namespace NCamGS
                     if (packetNum == (totalPackets - 1))
                         break;
                     lastPacketNum = packetNum;
+
+                    // request the next packet
+                    byte[] request_image_packet_command = { 10 };
+                    uavConn.SendCommand(request_image_packet_command, false);
 #if SIMULATE
                 }
 #endif 
@@ -696,7 +704,7 @@ namespace NCamGS
         {
             uavConn.Connect(0);
 
-            uavConn.SendTextToUAV("da 40 payload[0].mem_bytes[0]");
+            //uavConn.SendTextToUAV("da 40 payload[0].mem_bytes[0]");
             uavConn.SendTextToUAV("payload.broadcast_bytes 255 0");
         }
 
