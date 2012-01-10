@@ -397,9 +397,9 @@ TMS
 T 54600 51100 9 10 1 0 0 0 1
 TDI
 T 53500 40000 9 10 1 0 0 0 1
-Autopilot Payload based on ATmega644P processor
+Autopilot Payload based on ATmega644P processor, surface mount version
 T 53500 39700 9 10 1 0 0 0 1
-payload_644.sch
+payload_smt.sch
 T 53500 39400 9 10 1 0 0 0 1
 1
 T 55000 39400 9 10 1 0 0 0 1
