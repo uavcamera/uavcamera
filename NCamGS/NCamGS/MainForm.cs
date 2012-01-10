@@ -72,26 +72,28 @@ namespace NCamGS
         private void paintButton_Click(object sender, EventArgs e)
         {
             takeNewPicture = true;
-            doCommand();
+            doCommand(true);
            
         }
-        private void doCommand()
+        private void doCommand(bool capture)
         {
             statusLabel.Text = "Starting";
             progressBar.Value = 1;
             string fileName = string.Format("uavPictureAt{0:yyyy-MM-dd_hh-mm-ss-tt}.jpg", DateTime.Now);
             FileStream fileStream;
 
-                fileStream = new FileStream(filePathTextBox.Text+"\\"+fileName, FileMode.Create);
+            fileStream = new FileStream(filePathTextBox.Text+"\\"+fileName, FileMode.Create);
             BinaryWriter opFile = new BinaryWriter(fileStream);
 
 
             uavConn.SendTextToUAV("da 20 payload[0].mem_bytes[0]");
 
             stopCommand = false;
-            byte[] zeroToken = { 0 }; // send 0 to receive data
-            uavConn.SendCommand(zeroToken,false);
-
+            if (capture)
+            {
+                byte[] zeroToken = { 0 }; // send 0 to take picture
+                uavConn.SendCommand(zeroToken, false);
+            }
             uint imageID = 0;
 
             while (stopCommand == false)
@@ -126,7 +128,7 @@ namespace NCamGS
 
         private void imageListen(string fileName, FileStream fileStream, BinaryWriter opFile)
         {
-            int num_to_ack_check = 50;
+            int num_to_ack_check = 25;
             bool info_ack_flag = false;
 
             bool[] received_check = new bool[1];
@@ -706,5 +708,18 @@ namespace NCamGS
                     break;
             }
         }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            uavConn.Close();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            takeNewPicture = true;
+            doCommand(false);
+        }
+
+
     }
 }
