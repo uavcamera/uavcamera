@@ -1,3 +1,22 @@
+/* Copyright 2011 Michael Hodgson, Piyabhum Sornpaisarn, Andrew Busse, John Charlesworth, Paramithi Svastisinha, Matt Bennett
+
+    This file is part of uavcamera.
+
+    uavcamera is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    uavcamera is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with uavcamera.  If not, see <http://www.gnu.org/licenses/>.
+
+*/
+
 // Packet scan functionality
 
 #ifndef __PACKET_SCAN_H
@@ -41,6 +60,8 @@
 
 	#define MID_ACK						8
 
+	#define MID_NAK						9
+
 	/*//	- GS > PL: Set Colour Type [ Set Colour Type Message ID ] [ Colour Type ]
 	//	- GS > PL: Set Image Resolution [ Set Image Resolution Message ID ] [ Image Resolution ]
 	//	- GS > PL: Set Colour Type and Image Resolution [ Set Colour Type and Image Resolution Message ID ] [ Colour Type and Resolution (all one byte) ]*/
@@ -49,7 +70,7 @@
 #define MAX_MESSAGE_LENGTH 69
 
 // number of tokens to wait for each ACK
-#define ACK_WAIT_TOKENS	100
+#define ACK_WAIT_TOKENS	4
 #define NUM_ACKFAIL_RETRIES 3
 // Public globals
 
@@ -64,17 +85,22 @@ volatile extern bool messageStartSendPending;
 volatile extern bool ackReceived;
 volatile extern uint8_t ackCommandID;
 
+volatile extern bool nakReceived;
+volatile extern uint8_t nakCommandID;
+
 volatile extern uint16_t numTokens;
 
+volatile extern bool onlyGetAcks;
 
 // Function prototypes
 
 bool send_PICTURE_TAKEN_message(uint16_t imageID);
 bool send_IMAGE_DOWNLOAD_INFO_message(uint16_t numPackets);
 void send_ACK_message(uint8_t commandIDToAck);
+bool wait_for_ACK(uint8_t commandID);
 void flag_want_to_send_message();
 void wait_for_send_message();
-
+bool send_message(bool needsAck, uint8_t numRetries);
 // extern prototypes for packet_scan() and packet_rx_request() prototypes already supplied in common modules file mod/module.h but must be implemented locally
 
 #endif // __PACKET_SCAN_H
