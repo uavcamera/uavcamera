@@ -263,7 +263,7 @@ namespace NCamGS
                             //Console.Write(lineOut);
                             if (lineOut.IndexOf("PAYLOAD[0].SEND_BYTES") != -1)
                             {
-                                Console.WriteLine("Command aknowleged!");
+                                Console.WriteLine("Command acknowledged!");
                                 return;
                             }
                             
