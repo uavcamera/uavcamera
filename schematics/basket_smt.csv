@@ -1,0 +1,33 @@
+
+"Line No.","Order Code","Qty","Description","Mftr. & Part No.","RoHS","Unit Price","Avail.","Line Price","Line note"
+
+1,"1455121","1","AVR MCU, 64K FLASH, 4K RAM, TQFP44","ATMEL - ATMEGA644P-20AU","YES ","6.97","In Stock","6.97",""
+2,"1764374","1","CONNECTOR, MICRO SD, PUSH PUSH","HRS (HIROSE) - DM3AT-SF-PEJM5(40)","YES ","1.62","In Stock","1.62",""
+
+3,"1469641","1","CRYSTAL, 16MHZ","VISHAY DALE - XT49M-2016M","YES ","0.35","In Stock","0.35",""
+4,"1379977","1","IC, TRANSCEIVER, RS-485/422, SOIC14","MAXIM INTEGRATED PRODUCTS - MAX489ESD+","YES ","3.7","In Stock","3.7",""
+
+5,"9728856","1","HEADER, SOCKET, 2.54MM, 36WAY","FISCHER ELEKTRONIK - BL1.36Z","YES ","1.87","In Stock","1.87",""
+6,"4134424","5","LED, SMD, PLCC2, YELLOW/GREEN","AVAGO TECHNOLOGIES - HSMG-A100-J02J1","YES ","0.068","In Stock","0.34",""
+
+7,"1841232","1","HEADER, 2.54MM, PIN, DUAL, 10WAY","WUERTH ELEKTRONIK - 61301021121","YES ","0.97","In Stock","0.97",""
+8,"1345053","1","JACK, SMT, 8WAY","MOLEX - 85543-5001","YES ","2.34","In Stock","2.34",""
+
+9,"1650939","2","CAPACITOR","TAIYO YUDEN - JMK325F476ZN-T","YES ","0.45","In Stock","0.9",""
+10,"9406158","10","CAPACITOR, 0603, 22NF, 25V","MULTICOMP - T0603R223KCT","YES ","0.018","In Stock","0.18",""
+
+11,"9406107","10","CAPACITOR, 0603, 22PF, 50V","MULTICOMP - U0603C220JCT","YES ","0.015","In Stock","0.15",""
+12,"1652858","10","THICK FILM CHIP RESISTOR","VISHAY DRALORIC - CRCW0603220RJNEA","YES ","0.07","In Stock","0.7",""
+
+13,"2008351","50","RESISTOR, 0603, 120R, 5%, 0.1W","BOURNS - CR0603-JW-121GLF","YES ","0.0090","In Stock","0.45",""
+14,"1612045","5","RESISTOR, THIN FILM","SUSUMU - RR0816Q-49R9-D-68R","YES ","0.013","In Stock","0.06",""
+15,"1652719","5","THICK FILM CHIP RESISTOR","MULTICOMP - MC0603WGF1002T5E-TC","Y-EX ","0.06","In Stock","0.3",""
+16,"1761590","1","LED RED PLCC2 150MCD","TOSHIBA - TLRMH1100B(T11)","YES ","0.21","In Stock","0.21",""
+17,"2065109","1","SWITCH, 260GF, 6X6MM,SMD, 4.3MM ACT","WUERTH ELEKTRONIK - 430152043826","YES ","0.42","In Stock","0.42",""
+"","","","","","","","",""
+"","","","","","","","Goods Subtotal:","21.53"
+"","","","","","","","Promotion Code Discount:","0.0"
+"","","","","","","","Delivery Charges:","Unknown"
+"","","","","","","","Goods Total:","21.53"
+"","","","","","","","VAT:","4.31"
+"","","","","","","","Total:","25.84"

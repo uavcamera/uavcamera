@@ -105,7 +105,7 @@ namespace NCamGS
             BinaryWriter opFile = new BinaryWriter(fileStream);
 
 
-            uavConn.SendTextToUAV("da 20 payload[0].mem_bytes[0]");
+
 
             stopCommand = false;
             if (capture)
@@ -127,7 +127,7 @@ namespace NCamGS
                     {
                         // got PICTURE_TAKEN
                         byte[] picture_taken_ack = { 8, 1 }; // ack the picture_taken command
-                        uavConn.SendCommand(picture_taken_ack,true);
+                        uavConn.SendCommand(picture_taken_ack, true);
 
                         statusLabel.Text = "Found PICTURE_TAKEN";
                         Console.WriteLine("Found PICTURE_TAKEN");
@@ -147,7 +147,7 @@ namespace NCamGS
 
         private void imageListen(string fileName, FileStream fileStream, BinaryWriter opFile)
         {
-            int num_to_ack_check = 25;
+            int num_to_ack_check = 5;
             bool info_ack_flag = false;
 
             bool[] received_check = new bool[1];
@@ -240,6 +240,7 @@ namespace NCamGS
 
                         bool isOK = true;
                         for (int pCheck = (int)packetNum; pCheck > (packetNum - check_num); pCheck--)
+                        //for (int pCheck = (int)packetNum; pCheck >= 0; pCheck--)
                         {
                             if (received_check[pCheck] == false)
                             {
@@ -258,6 +259,7 @@ namespace NCamGS
                             byte[] image_data_nak = { 9, 4 }; // nak the image data command
                             uavConn.SendCommand(image_data_nak, true);
                             lastPacketNum = packetNum;
+                            //MessageBox.Show("NAK");
                             continue;
                         }
                     }
@@ -297,10 +299,6 @@ namespace NCamGS
 
                 statusLabel.Text = "Done!";
                 Console.WriteLine("Done!");
-
-
-
-
 
                 updateInitialDirectory(fileName);
 
@@ -698,7 +696,7 @@ namespace NCamGS
         {
             uavConn.Connect(0);
 
-            uavConn.SendTextToUAV("da 20 payload[0].mem_bytes[0]");
+            uavConn.SendTextToUAV("da 40 payload[0].mem_bytes[0]");
             uavConn.SendTextToUAV("payload.broadcast_bytes 255 0");
         }
 
@@ -743,6 +741,7 @@ namespace NCamGS
 
         private void button1_Click(object sender, EventArgs e)
         {
+            stopCommand = false;
             takeNewPicture = true;
             doCommand(false);
         }
