@@ -1,0 +1,34 @@
+
+"Line No.","Order Code","Qty","Description","Mftr. & Part No.","RoHS","Unit Price","Avail.","Line Price","Line note"
+
+1,"1764374","1","CONNECTOR, MICRO SD, PUSH PUSH","HRS (HIROSE) - DM3AT-SF-PEJM5(40)","YES ","1.62","In Stock","1.62",""
+2,"3938360","1","SOCKET, RJ45, 8P8C","MH CONNECTORS - MHRJJ88NFRA","YES ","0.66","In Stock","0.66",""
+
+3,"1841232","1","HEADER, 2.54MM, PIN, DUAL, 10WAY","WUERTH ELEKTRONIK - 61301021121","YES ","0.97","In Stock","0.97",""
+4,"1455122","1","IC, AVR MCU, 64K FLASH, 4K RAM, 644","ATMEL - ATMEGA644P-20PU","YES ","7.05","In Stock","7.05",""
+
+5,"9725148","1","TRANSCEIVER RS422/485, DIP14, 489","MAXIM INTEGRATED PRODUCTS - MAX489CPD+","YES ","2.78","In Stock","2.78",""
+6,"9343490","10","RESISTOR, 0.125W 1% 68R","MULTICOMP - MF12 68R","YES ","0.012","In Stock","0.12",""
+
+7,"1652494","4","LED LAMP, 3MM GREEN","SPC TECHNOLOGY - HLMP1503","YES ","0.06","In Stock","0.24",""
+8,"1611761","1","CRYSTAL, 16M, 18PF CL, HC49/4H","RALTRON - AS-16.000-18","YES ","0.23","In Stock","0.23",""
+
+9,"1813689","1","SWITCH, TACT, MOM, RED","TE CONNECTIVITY - FSM2JART","YES ","0.185","In Stock","0.18",""
+10,"1740543","5","CAPACITOR, 50V, 22NF","AVX - CK05BX223K","YES ","0.22","In Stock","1.1",""
+
+11,"1141760","5","CAPACITOR, 22PF, 50V, NP0, RADIAL","VISHAY - K220J15C0GF53L2","YES ","0.141","In Stock","0.7",""
+12,"1907196","5","CAPACITOR, RADIAL, 16V, 47UF","PANASONIC - ECA1CHG470","YES ","0.151","In Stock","0.76",""
+
+13,"1863178","1","LED, 3MM, GAASP, RED","AVAGO TECHNOLOGIES - HLMP-Y301-F0000","YES ","0.094","In Stock","0.09",""
+14,"1652654","2","METAL FILM RESISTOR","VISHAY DALE - RN55D1002FB14","NO ","0.051","In Stock","0.1",""
+
+15,"1612518","2","RESISTOR, 120R, 1W, 5%","VISHAY BC COMPONENTS - PR01000101200JA500","YES ","0.084","In Stock","0.17",""
+16,"1357856","5","RESISTOR, 0.5W 5% 220R","MULTICOMP - MOR0S2J0221A50","YES ","0.044","In Stock","0.22",""
+17,"9728856","1","HEADER, SOCKET, 2.54MM, 36WAY","FISCHER ELEKTRONIK - BL1.36Z","YES ","1.87","In Stock","1.87",""
+"","","","","","","","",""
+"","","","","","","","Goods Subtotal:","18.86"
+"","","","","","","","Promotion Code Discount:","0.0"
+"","","","","","","","Delivery Charges:","Unknown"
+"","","","","","","","Goods Total:","18.86"
+"","","","","","","","VAT:","3.77"
+"","","","","","","","Total:","22.63"
